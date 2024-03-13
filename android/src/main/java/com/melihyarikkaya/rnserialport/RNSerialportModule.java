@@ -7,6 +7,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 
+import android.os.Build;
+
+import android.content.Context;
+
 import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
@@ -165,7 +169,11 @@ public class RNSerialportModule extends ReactContextBaseJavaModule {
     filter.addAction(ACTION_USB_PERMISSION);
     filter.addAction(ACTION_USB_ATTACHED);
     filter.addAction(ACTION_USB_DETACHED);
-    reactContext.registerReceiver(usbReceiver, filter);
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+      reactContext.registerReceiver(usbReceiver, filter, Context.RECEIVER_EXPORTED);
+    } else {
+      reactContext.registerReceiver(usbReceiver, filter);
+    }
   }
 
   private void fillDriverList() {
@@ -548,7 +556,12 @@ public class RNSerialportModule extends ReactContextBaseJavaModule {
   private void requestUserPermission() {
     if(device == null)
       return;
-    PendingIntent mPendingIntent = PendingIntent.getBroadcast(reactContext, 0 , new Intent(ACTION_USB_PERMISSION), 0);
+    PendingIntent mPendingIntent;
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+      mPendingIntent = PendingIntent.getBroadcast(reactContext, 0, new Intent(ACTION_USB_PERMISSION), PendingIntent.FLAG_IMMUTABLE);
+    } else {
+      mPendingIntent = PendingIntent.getBroadcast(reactContext, 0, new Intent(ACTION_USB_PERMISSION), PendingIntent.FLAG_UPDATE_CURRENT);
+    }
     usbManager.requestPermission(device, mPendingIntent);
   }
 
