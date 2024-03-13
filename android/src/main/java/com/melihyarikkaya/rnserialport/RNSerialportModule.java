@@ -58,7 +58,8 @@ public class RNSerialportModule extends ReactContextBaseJavaModule {
   private final String ACTION_USB_PERMISSION_GRANTED = "com.felhr.usbservice.USB_PERMISSION_GRANTED";
   private final String ACTION_USB_PERMISSION_NOT_GRANTED = "com.felhr.usbservice.USB_PERMISSION_NOT_GRANTED";
   private final String ACTION_USB_DISCONNECTED = "com.felhr.usbservice.USB_DISCONNECTED";
-  private final String ACTION_USB_PERMISSION = "com.android.example.USB_PERMISSION";
+//  private final String ACTION_USB_PERMISSION = "com.android.example.USB_PERMISSION";
+  private final String ACTION_USB_PERMISSION = BuildConfig.LIBRARY_PACKAGE_NAME + ".GRANT_USB";
   private final String ACTION_USB_NOT_OPENED = "com.melihyarikkaya.rnserialport.USB_NOT_OPENED";
   private final String ACTION_USB_CONNECT = "com.melihyarikkaya.rnserialport.USB_CONNECT";
 
@@ -556,12 +557,7 @@ public class RNSerialportModule extends ReactContextBaseJavaModule {
   private void requestUserPermission() {
     if(device == null)
       return;
-    PendingIntent mPendingIntent;
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-      mPendingIntent = PendingIntent.getBroadcast(reactContext, 0, new Intent(ACTION_USB_PERMISSION), PendingIntent.FLAG_IMMUTABLE);
-    } else {
-      mPendingIntent = PendingIntent.getBroadcast(reactContext, 0, new Intent(ACTION_USB_PERMISSION), PendingIntent.FLAG_UPDATE_CURRENT);
-    }
+    PendingIntent mPendingIntent = PendingIntent.getBroadcast(reactContext, 0, new Intent(ACTION_USB_PERMISSION), PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
     usbManager.requestPermission(device, mPendingIntent);
   }
 
