@@ -170,11 +170,7 @@ public class RNSerialportModule extends ReactContextBaseJavaModule {
     filter.addAction(ACTION_USB_PERMISSION);
     filter.addAction(ACTION_USB_ATTACHED);
     filter.addAction(ACTION_USB_DETACHED);
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-      reactContext.registerReceiver(usbReceiver, filter, Context.RECEIVER_EXPORTED);
-    } else {
-      reactContext.registerReceiver(usbReceiver, filter);
-    }
+    reactContext.registerReceiver(usbReceiver, filter);
   }
 
   private void fillDriverList() {
@@ -557,12 +553,7 @@ public class RNSerialportModule extends ReactContextBaseJavaModule {
   private void requestUserPermission() {
     if(device == null)
       return;
-    PendingIntent mPendingIntent = null;
-    if(Build.VERSION.SDK_INT >= 31) {
-      mPendingIntent = PendingIntent.getBroadcast(context, 0, new Intent(ACTION_USB_PERMISSION), PendingIntent.FLAG_IMMUTABLE);
-    } else {
-      mPendingIntent = PendingIntent.getBroadcast(context, 0, new Intent(ACTION_USB_PERMISSION), 0);
-    }
+    PendingIntent mPendingIntent = PendingIntent.getBroadcast(reactContext, 0, new Intent(ACTION_USB_PERMISSION), PendingIntent.FLAG_IMMUTABLE);
     usbManager.requestPermission(device, mPendingIntent);
   }
 
