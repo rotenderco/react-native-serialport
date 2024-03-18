@@ -54,13 +54,14 @@ allprojects {
 }
 
 dependencies {
-    /* Android Arch Component Work Manager for Java */
-    def work_version = "2.7.1"
-    implementation "androidx.work:work-runtime:$work_version"
-    // optional - Test helpers
-    androidTestImplementation "androidx.work:work-testing:$work_version"
+//    /* Android Arch Component Work Manager for Java */
+//    def work_version = "2.7.1"
+//    implementation "androidx.work:work-runtime:$work_version"
+//    // optional - Test helpers
+//    androidTestImplementation "androidx.work:work-testing:$work_version"
 
     implementation 'com.google.guava:guava:20.0'
     implementation 'com.facebook.react:react-native:+'
-    implementation 'com.github.felHR85:UsbSerial:6.1.0'
+//    implementation 'com.github.felHR85:UsbSerial:6.1.0'
+    implementation fileTree(dir: 'libs', include: ['usbserial-6.2.0-release.aar'])
 }
