@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import com.google.common.primitives.UnsignedBytes;
 
@@ -110,7 +111,7 @@ public class RNSerialportModule extends ReactContextBaseJavaModule {
     @Override
     public void onReceive(Context context, Intent intent) {
       String action = intent.getAction();
-      switch (action) {
+      switch (Objects.requireNonNull(action)) {
         case ACTION_USB_CONNECT:
           eventEmit(onConnectedEvent, null);
           break;
@@ -133,8 +134,10 @@ public class RNSerialportModule extends ReactContextBaseJavaModule {
           }
           break;
         case ACTION_USB_PERMISSION :
-          boolean granted = intent.getBooleanExtra(UsbManager.EXTRA_PERMISSION_GRANTED, false);
-          startConnection(granted);
+          synchronized (this) {
+            boolean granted = intent.getBooleanExtra(UsbManager.EXTRA_PERMISSION_GRANTED, false);
+            startConnection(granted);
+          }
           break;
         case ACTION_USB_PERMISSION_GRANTED:
           eventEmit(onUsbPermissionGranted, null);
