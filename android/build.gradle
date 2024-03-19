@@ -5,7 +5,7 @@ buildscript {
     }
 
     dependencies {
-        classpath("com.android.tools.build:gradle:8.3.0")
+        classpath("com.android.tools.build:gradle:8.3.1")
     }
 }
 
@@ -40,7 +40,14 @@ android {
 
 repositories {
     google()
+    maven {
+        // All of React Native (JS, Obj-C sources, Android binaries) is installed from npm
+        url("$rootDir/../node_modules/react-native/android")
+    }
     mavenCentral()
+    flatDir {
+        dirs 'libs/'
+    }
 }
 
 allprojects {
@@ -64,7 +71,6 @@ allprojects {
 def jscFlavor = "org.webkit:android-jsc:+"
 
 dependencies {
-
     implementation 'com.google.guava:guava:33.1.0-android'
     implementation("com.facebook.react:react-android:0.73.6")
     implementation("com.facebook.react:flipper-integration:0.73.6")
