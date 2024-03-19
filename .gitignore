@@ -36,6 +36,7 @@ project.xcworkspace
 android/.classpath
 android/.project
 android/.settings
+*.hprof
 #
 build/
 .idea

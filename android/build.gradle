@@ -1,25 +1,31 @@
+
 buildscript {
     repositories {
         google()
-        jcenter()
+        mavenCentral()
     }
 
     dependencies {
-        classpath("com.android.tools.build:gradle:4.1.0")
+        classpath("com.android.tools.build:gradle:8.3.0")
+//        classpath("com.facebook.react:react-native-gradle-plugin:0.71.19")
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.8.0")
     }
 }
 
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 30
-    buildToolsVersion "30.0.2"
+    namespace 'com.melihyarikkaya.rnserialport'
+
+    compileSdk Integer.parseInt(project.ANDROID_BUILD_SDK_VERSION)
+//    buildToolsVersion project.ANDROID_BUILD_TOOLS_SDK_VERSION
 
     defaultConfig {
-        minSdkVersion 21
-        targetSdkVersion 30
+        minSdk Integer.parseInt(project.ANDROID_BUILD_MIN_SDK_VERSION)
+        targetSdkVersion Integer.parseInt(project.ANDROID_BUILD_TARGET_SDK_VERSION)
         versionCode 1
         versionName "1.0"
+        testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
     }
     buildTypes {
         release {
@@ -37,21 +43,29 @@ android {
 }
 
 repositories {
-    mavenLocal()
-    maven {
-        // All of React Native (JS, Obj-C sources, Android binaries) is installed from npm
-        url("$rootDir/../node_modules/react-native/android")
-    }
     google()
-    jcenter()
+    mavenCentral()
 }
 
 allprojects {
     repositories {
-        jcenter()
-        maven { url "https://jitpack.io" }
+        google()
+        mavenCentral()
     }
 }
+
+/**
+ * The preferred build flavor of JavaScriptCore (JSC)
+ *
+ * For example, to use the international variant, you can use:
+ * `def jscFlavor = 'org.webkit:android-jsc-intl:+'`
+ *
+ * The international variant includes ICU i18n library and necessary data
+ * allowing to use e.g. `Date.toLocaleString` and `String.localeCompare` that
+ * give correct results when using with locales other than en-US. Note that
+ * this variant is about 6MiB larger per architecture than default.
+ */
+def jscFlavor = "org.webkit:android-jsc:+"
 
 dependencies {
 //    /* Android Arch Component Work Manager for Java */
@@ -60,8 +74,16 @@ dependencies {
 //    // optional - Test helpers
 //    androidTestImplementation "androidx.work:work-testing:$work_version"
 
-    implementation 'com.google.guava:guava:20.0'
-    implementation 'com.facebook.react:react-native:+'
+    implementation 'com.google.guava:guava:33.1.0-android'
+//    implementation("com.facebook.react:react-android:0.73.5")
+//    implementation("com.facebook.react:flipper-integration:0.73.5")
+    implementation 'com.facebook.react:react-native-artifacts:0.73.5'
 //    implementation 'com.github.felHR85:UsbSerial:6.1.0'
     implementation fileTree(dir: 'libs', include: ['usbserial-6.2.0-release.aar'])
+
+//    if (project.hermesEnabled.toBoolean()) {
+//        implementation("com.facebook.react:hermes-android:0.73.5")
+//    } else {
+//        implementation jscFlavor
+//    }
 }
