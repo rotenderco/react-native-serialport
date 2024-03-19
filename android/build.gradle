@@ -77,12 +77,12 @@ dependencies {
     implementation 'com.google.guava:guava:33.1.0-android'
 //    implementation("com.facebook.react:react-android:0.73.5")
 //    implementation("com.facebook.react:flipper-integration:0.73.5")
-    implementation 'com.facebook.react:react-native-artifacts:0.73.5'
+    implementation 'com.facebook.react:react-native:+'
 //    implementation 'com.github.felHR85:UsbSerial:6.1.0'
     implementation fileTree(dir: 'libs', include: ['usbserial-6.2.0-release.aar'])
 
 //    if (project.hermesEnabled.toBoolean()) {
-//        implementation("com.facebook.react:hermes-android:0.73.5")
+//        implementation("com.facebook.react:hermes-android")
 //    } else {
 //        implementation jscFlavor
 //    }
