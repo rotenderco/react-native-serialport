@@ -1,5 +1,6 @@
 package com.melihyarikkaya.rnserialport;
 
+import android.annotation.SuppressLint;
 import android.app.PendingIntent;
 
 import android.content.BroadcastReceiver;
@@ -34,6 +35,8 @@ import android.hardware.usb.UsbDevice;
 import android.hardware.usb.UsbDeviceConnection;
 import android.hardware.usb.UsbManager;
 
+import androidx.annotation.NonNull;
+
 import com.felhr.usbserial.UsbSerialDevice;
 import com.felhr.usbserial.UsbSerialInterface;
 
@@ -46,6 +49,7 @@ public class RNSerialportModule extends ReactContextBaseJavaModule {
     fillDriverList();
   }
 
+  @NonNull
   @Override
   public String getName() {
     return "RNSerialport";
@@ -160,6 +164,7 @@ public class RNSerialportModule extends ReactContextBaseJavaModule {
     return err;
   }
 
+  @SuppressLint("UnspecifiedRegisterReceiverFlag")
   private void setFilters() {
     IntentFilter filter = new IntentFilter();
     filter.addAction(ACTION_USB_PERMISSION_GRANTED);
