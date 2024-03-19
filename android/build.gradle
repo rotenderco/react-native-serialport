@@ -69,7 +69,7 @@ dependencies {
     implementation("com.facebook.react:react-android:0.73.6")
     implementation("com.facebook.react:flipper-integration:0.73.6")
 
-    implementation project(":usbserial")
+    compileOnly(files("libs/usbserial-6.2.1-release.aar"))
 
     if (project.hermesEnabled.toBoolean()) {
         implementation("com.facebook.react:hermes-android:0.73.5")
