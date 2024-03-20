@@ -134,10 +134,8 @@ public class RNSerialportModule extends ReactContextBaseJavaModule {
           }
           break;
         case ACTION_USB_PERMISSION :
-          synchronized (this) {
-            boolean granted = intent.getBooleanExtra(UsbManager.EXTRA_PERMISSION_GRANTED, false);
-            startConnection(granted);
-          }
+          boolean granted = intent.getBooleanExtra(UsbManager.EXTRA_PERMISSION_GRANTED, false);
+          startConnection(granted);
           break;
         case ACTION_USB_PERMISSION_GRANTED:
           eventEmit(onUsbPermissionGranted, null);
@@ -532,6 +530,7 @@ public class RNSerialportModule extends ReactContextBaseJavaModule {
 
         if(!serialPort.open()){
           Intent intent = new Intent(ACTION_USB_NOT_OPENED);
+          intent.setPackage(reactContext.getPackageName());
           reactContext.sendBroadcast(intent);
           return;
         }
@@ -551,8 +550,10 @@ public class RNSerialportModule extends ReactContextBaseJavaModule {
         serialPort.read(mCallback);
 
         Intent intent = new Intent(ACTION_USB_READY);
+        intent.setPackage(reactContext.getPackageName());
         reactContext.sendBroadcast(intent);
         intent = new Intent(ACTION_USB_CONNECT);
+        intent.setPackage(reactContext.getPackageName());
         reactContext.sendBroadcast(intent);
       } catch (Exception error) {
         WritableMap map = createError(Definitions.ERROR_CONNECTION_FAILED, Definitions.ERROR_CONNECTION_FAILED_MESSAGE);
@@ -565,13 +566,16 @@ public class RNSerialportModule extends ReactContextBaseJavaModule {
   private void requestUserPermission() {
     if(device == null)
       return;
-    PendingIntent mPendingIntent = PendingIntent.getBroadcast(reactContext, 0, new Intent(ACTION_USB_PERMISSION), PendingIntent.FLAG_IMMUTABLE);
+    Intent intent = new Intent(ACTION_USB_PERMISSION);
+    intent.setPackage(reactContext.getPackageName());
+    PendingIntent mPendingIntent = PendingIntent.getBroadcast(reactContext, 0, intent, PendingIntent.FLAG_IMMUTABLE);
     usbManager.requestPermission(device, mPendingIntent);
   }
 
   private void startConnection(boolean granted) {
     if(granted) {
       Intent intent = new Intent(ACTION_USB_PERMISSION_GRANTED);
+      intent.setPackage(reactContext.getPackageName());
       reactContext.sendBroadcast(intent);
       connection = usbManager.openDevice(device);
       new ConnectionThread().start();
@@ -579,6 +583,7 @@ public class RNSerialportModule extends ReactContextBaseJavaModule {
       connection = null;
       device = null;
       Intent intent = new Intent(ACTION_USB_PERMISSION_NOT_GRANTED);
+      intent.setPackage(reactContext.getPackageName());
       reactContext.sendBroadcast(intent);
     }
   }
@@ -589,10 +594,12 @@ public class RNSerialportModule extends ReactContextBaseJavaModule {
       connection = null;
       device = null;
       Intent intent = new Intent(ACTION_USB_DISCONNECTED);
+      intent.setPackage(reactContext.getPackageName());
       reactContext.sendBroadcast(intent);
       serialPortConnected = false;
     } else {
       Intent intent = new Intent(ACTION_USB_DETACHED);
+      intent.setPackage(reactContext.getPackageName());
       reactContext.sendBroadcast(intent);
     }
   }
