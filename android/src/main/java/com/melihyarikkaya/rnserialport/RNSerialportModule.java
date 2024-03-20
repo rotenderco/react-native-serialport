@@ -568,7 +568,7 @@ public class RNSerialportModule extends ReactContextBaseJavaModule {
       return;
     Intent intent = new Intent(ACTION_USB_PERMISSION);
     intent.setPackage(reactContext.getPackageName());
-    PendingIntent mPendingIntent = PendingIntent.getBroadcast(reactContext, 0, intent, PendingIntent.FLAG_IMMUTABLE);
+    PendingIntent mPendingIntent = PendingIntent.getBroadcast(reactContext, 0, intent, PendingIntent.FLAG_MUTABLE);
     usbManager.requestPermission(device, mPendingIntent);
   }
 
