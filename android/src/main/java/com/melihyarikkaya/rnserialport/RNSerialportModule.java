@@ -624,8 +624,9 @@ public class RNSerialportModule extends ReactContextBaseJavaModule {
         } else if(returnedDataType == Definitions.RETURNED_DATA_TYPE_HEXSTRING) {
           String hexString = Definitions.bytesToHex(bytes);
           params.putString(payloadKey, hexString);
-        } else
+        } else {
           return;
+        }
 
         eventEmit(onReadDataFromPort, params);
 
