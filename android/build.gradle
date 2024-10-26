@@ -74,7 +74,7 @@ dependencies {
     implementation 'com.google.guava:guava:33.1.0-android'
     implementation("com.facebook.react:react-android:0.73.6")
     // implementation 'com.github.felHR85:UsbSerial:6.1.0'
-    implementation 'com.github.felHR85:UsbSerial:7ad6c9f6880e93a29498e479d3e871d5b03d188b'
+    implementation 'com.github.felHR85:UsbSerial:6.0.6'
 
     if (project.hermesEnabled.toBoolean()) {
         implementation("com.facebook.react:hermes-android:0.73.5")
