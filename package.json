@@ -1,6 +1,6 @@
 {
   "name": "@rotender/react-native-serialport",
-  "version": "1.3.12",
+  "version": "1.3.13",
   "description": "This library is for usb serial port communication on android platforms",
   "main": "index.js",
   "scripts": {
