@@ -36,6 +36,11 @@ android {
         sourceCompatibility JavaVersion.VERSION_17
         targetCompatibility JavaVersion.VERSION_17
     }
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
+    }
 }
 
 repositories {
@@ -45,9 +50,6 @@ repositories {
         url("$rootDir/../node_modules/react-native/android")
     }
     mavenCentral()
-    flatDir {
-        dirs 'libs'
-    }
 }
 
 allprojects {
@@ -73,8 +75,9 @@ def jscFlavor = "org.webkit:android-jsc:+"
 dependencies {
     implementation 'com.google.guava:guava:33.1.0-android'
     implementation("com.facebook.react:react-android:0.73.6")
-    api fileTree(include: ["*.aar"], dir: "libs")
-    implementation files("libs/usbserial-6.1.0-release.aar")
+//    api fileTree(include: ["*.aar"], dir: "libs")
+//    implementation files("libs/usbserial-6.1.0-release.aar")
+    implementation (files("libs/usbserial-6.1.0-release.aar"))
 //    implementation files("libs/usbserial-6.2.1-release.aar")
 //    implementation 'com.github.felHR85:UsbSerial:6.1.0'
 //    implementation 'com.github.felHR85:UsbSerial:6.0.6'
