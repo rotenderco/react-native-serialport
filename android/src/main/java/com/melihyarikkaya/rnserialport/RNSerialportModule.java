@@ -10,8 +10,6 @@ import android.content.IntentFilter;
 
 import android.os.Build;
 
-import android.content.Context;
-
 import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
@@ -149,7 +147,7 @@ public class RNSerialportModule extends ReactContextBaseJavaModule {
 
   private void eventEmit(String eventName, Object data) {
     try {
-      if(reactContext.hasActiveCatalystInstance()) {
+      if(reactContext.hasActiveReactInstance()) {
         reactContext.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class).emit(eventName, data);
       }
     }
