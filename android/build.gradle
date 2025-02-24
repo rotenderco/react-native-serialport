@@ -70,8 +70,10 @@ def jscFlavor = "org.webkit:android-jsc:+"
 dependencies {
     implementation 'com.google.guava:guava:33.1.0-android'
     implementation("com.facebook.react:react-android:0.73.6")
-    compileOnly(files("./libs/usbserial-6.1.0-release.aar"))
+//    compileOnly(files("./libs/usbserial-6.1.0-release.aar"))
 //    compileOnly(files("./libs/usbserial-6.2.1-release.aar"))
+//    implementation 'com.github.felHR85:UsbSerial:6.1.0'
+    implementation 'com.github.felHR85:UsbSerial:6.0.6'
 
     if (project.hermesEnabled.toBoolean()) {
         implementation("com.facebook.react:hermes-android:0.73.5")
